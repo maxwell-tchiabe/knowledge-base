@@ -52,6 +52,29 @@ Each successful `kb-ingest ingest` run saves generated files under `Dokumente/_i
 
 The archive is created after a successful database dump. The first run after enabling artifact saving reprocesses documents whose generated artifacts do not exist yet; later unchanged runs reuse those artifacts and still refresh the SQL dump/archive. To restore the database, start the pgvector container, then run `psql` against the target database with `-f Dokumente/_ingestion/current/database/knowledge_base.sql`. Keep the `.sql` dump or zip outside the machine if you need it to survive local disk loss.
 
+## Source documents and Git LFS
+
+The source PDFs in `Dokumente/` and the generated snapshot in `Dokumente/_ingestion/` are included in the repository. Large binary files are stored with Git LFS: PDFs, ZIP archives, NumPy embedding files, OCR page images, SQL dumps, and JSONL page/chunk data. Small metadata and manifest files are stored as normal Git files. These files remain available in the repository independently of whether the local Docker database is running.
+
+Install Git LFS before cloning, then download the tracked file contents:
+
+```powershell
+git lfs install
+git clone <repository-url>
+cd knowledge-base
+git lfs pull
+```
+
+In this working copy, `.env` is intentionally excluded because it can contain credentials. The PDF and `_ingestion/` ignore rules protect local data from accidental adds; existing committed files remain tracked. When intentionally adding a new PDF or a generated artifact under those ignored paths, force-add the specific file or folder:
+
+```powershell
+git add -f -- "Dokumente/path/to/new-document.pdf"
+git add -f -- "Dokumente/_ingestion/current"
+git add -f -- "Dokumente/_ingestion/latest.zip"
+```
+
+Commit normally after staging. Git LFS uploads large file contents when the commit is pushed; the commit stores their LFS pointers. Do not force-add `.env`.
+
 ## Tests
 
 ```powershell
