@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "knowledge-base-ingest"
+version = "0.1.0"
+description = "Page-aware PDF ingestion into PostgreSQL with pgvector"
+requires-python = ">=3.11"
+dependencies = [
+    "groq>=1.7.0",
+    "numpy>=2.0",
+    "pgvector>=0.3",
+    "psycopg[binary]>=3.2",
+    "PyMuPDF>=1.24",
+    "python-dotenv>=1.0",
+    "sentence-transformers>=5.0",
+    "tiktoken>=0.8",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0"]
+
+[project.scripts]
+kb-ingest = "knowledge_ingest.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
