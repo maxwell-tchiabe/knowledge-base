@@ -1,0 +1,11 @@
+{
+  "created_at_utc": "2026-11-08T20:35:40.422046+00:00",
+  "database_dump": "database/knowledge_base.sql",
+  "document_artifacts": "documents/",
+  "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+  "embedding_dimensions": 384,
+  "chunk_size_tokens": 512,
+  "chunk_overlap_tokens": 80,
+  "ocr_images": "Only pages routed through OCR are included.",
+  "source_pdfs_included": false
+}

@@ -1,0 +1,6 @@
+{
+  "model": "sentence-transformers/all-MiniLM-L6-v2",
+  "dimensions": 384,
+  "normalization": "l2",
+  "format": "NumPy compressed archive (.npz), float32"
+}
